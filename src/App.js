@@ -8,25 +8,39 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
+import { addToBasket } from "./actions/index";
+import axios1 from "./axios";
 
 function App() {
   const dispatch = useDispatch();
 
+  const fetchCartItems = async (user) => {
+    try {
+      const cartItems = await axios1({
+        method: "get",
+        url: `users/${user.uid}/cartItems`,
+      });
+      for (const cartItem of cartItems.data) {
+        dispatch(addToBasket(cartItem));
+      }
+    } catch (error) {
+      console.log(`Error while fetching cart Items is: \n${error}`);
+    }
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("If user \n");
-        console.log(user);
         dispatch({
           type: "LOGIN",
           payload: {
             user,
           },
         });
+        fetchCartItems(user);
       } else {
-        console.log("If not user \n");
-        console.log(user);
         dispatch({ type: "LOGOUT" });
+        dispatch({ type: "EMPTY_BASKET" });
       }
     });
   }, [dispatch]);

@@ -11,9 +11,6 @@ const Header = () => {
   const basket = useSelector((state) => state.basket);
   const user = useSelector((state) => state.user);
 
-  console.log("User: \n");
-  console.log(user);
-
   const logOut = () => {
     if (Object.keys(user).length !== 0) signOut(auth);
   };

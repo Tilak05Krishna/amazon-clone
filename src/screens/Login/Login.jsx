@@ -19,13 +19,9 @@ const Login = () => {
       email,
       password
     ).catch((e) => {
-      console.log("e: \n");
-      console.log(e);
       alert(e.message);
     });
     if (loggedIn) {
-      console.log("Logged in: \n");
-      console.log(loggedIn);
       navigate("/");
     }
   };
@@ -37,8 +33,6 @@ const Login = () => {
       email,
       password
     ).catch((e) => {
-      console.log("e: \n");
-      console.log(e);
       alert(e.message);
     });
     if (loggedIn) {

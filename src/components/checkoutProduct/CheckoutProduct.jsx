@@ -2,17 +2,23 @@ import React from "react";
 import "./checkoutProduct.css";
 import { useDispatch } from "react-redux";
 import { removeFromBasket } from "../../actions";
+import axios1 from "../../axios";
+import { useSelector } from "react-redux";
 
-const CheckoutProduct = ({ id, image, title, price, rating }) => {
+const CheckoutProduct = ({ id, imageUrl, title, price, rating }) => {
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  const removeProductFromBasket = () => {
+  const removeProductFromBasket = async () => {
+    await axios1({
+      method: "DELETE",
+      url: `/users/${user.uid}/cartItems/${id}`,
+    });
     dispatch(removeFromBasket(id));
   };
 
   return (
     <div className="checkout__product">
-      <img className="checkoutProduct__image" src={image} alt="" />
+      <img className="checkoutProduct__image" src={imageUrl} alt="" />
       <div className="checkoutProduct__info">
         <p className="checkoutProduct__title">{title}</p>
         <p className="checkoutProduct__price">

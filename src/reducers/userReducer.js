@@ -1,5 +1,4 @@
 const userReducer = (state = {}, action) => {
-  console.log("In user Reducer \n");
   switch (action.type) {
     case "LOGIN":
       return action.payload.user;
